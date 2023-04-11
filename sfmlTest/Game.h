@@ -1,5 +1,6 @@
 #pragma once
 #include "SFML/Graphics.hpp"
+#include <iostream>
 
 
 class Game
@@ -18,6 +19,8 @@ private:
 	//Game Object
 
 	sf::RectangleShape enemy;
+	float enemyPosX = 20;
+	float enemyPosY = 20;
 
 
 

@@ -9,7 +9,7 @@ void Game::initVariables()
 
 void Game::initEnemies()
 {
-	this->enemy.setPosition(20,20);
+	this->enemy.setPosition(this->enemyPosX,this->enemyPosY);
 	this->enemy.setSize(sf::Vector2f(100.f,100.f));
 	this->enemy.setFillColor(sf::Color::Red);
 	this->enemy.setOutlineColor(sf::Color::White);
@@ -40,27 +40,38 @@ void Game::pollEvents()
 {
 	while (this->window->pollEvent(this->ev))
 	{
-		if (sf::Event::Closed || this->ev.key.code == sf::Keyboard::Escape)
+		if (sf::Event::Closed)
 		{
 			this->window->close();
 			break;
 		}
+	
 	}
 }
 
 void Game::Update()
 { 
-	pollEvents();
+	this->pollEvents();
+
+
+	if (this->enemy.getPosition().x > window->getPosition().x && this->enemy.getPosition().y > window->getPosition().y)
+	{
+		this->enemy.setPosition(sf::Vector2f(this->enemyPosX--, this->enemyPosY--));
+	}
+	else {
+		this->enemy.setPosition(sf::Vector2f(this->enemyPosX++, this->enemyPosY++));
+	}
+	// Update Mouse Position 
+	 std::cout << "Mouse position : " << sf::Mouse::getPosition(*this->window).x << " " << sf::Mouse::getPosition(*this->window).y << std::endl;
+	 std::cout << "rectangle position : " << this->enemy.getPosition().x << " " << this->enemy.getPosition().y << std::endl;
+
 }
-
-
 
 void Game::render()
 {
 	this->window->clear();
 
 	this->window->draw(this->enemy);
-
 
 	this->window->display();
 }
