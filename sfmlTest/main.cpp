@@ -1,27 +1,26 @@
 #include <iostream>
 #include "SFML/Graphics.hpp"
 
-using namespace sf;
 int main()
 {
-	RenderWindow window(VideoMode(800, 800), "first sfml :D");
-	Event e;
+	sf::RenderWindow window(sf::VideoMode(800, 800), "first sfml :D" , sf::Style::Titlebar | sf::Style::Close);
+	sf::Event e;
 
 
 	while (window.isOpen())
 	{
-		window.clear(Color::Black);
-		window.display();
-		VertexBuffer vertix;
-		vertix.create(30);
-		window.draw(vertix);
 
 		while (window.pollEvent(e))
 		{
-			if (e.type == Event::Closed)
+			if (e.type == sf::Event::Closed || e.key.code == sf::Keyboard::Escape)
 				window.close();
+			break;
 		}
+
+		window.clear(sf::Color::Black);
+		window.display();
+
 	}
 
-
+	return 0;
 }
