@@ -13,13 +13,32 @@ private:
 
 	void initWindow();
 
-public :
-	Game();
+	void initEnemies();
 
+	//Game Object
+
+	sf::RectangleShape enemy;
+
+
+
+public :
+	//construct
+	Game();
+	//destruct
 	virtual ~Game();
+	
+
+	//Accessors
+
+	const bool running() const {
+		return this->window->isOpen();
+	};
+
+
+	//functions
+	void pollEvents();
 
 	void Update();
-
 
 	void render();
 
