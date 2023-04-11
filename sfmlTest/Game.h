@@ -7,6 +7,10 @@ class Game
 private:
 
 	void initVariables();
+	sf::RenderWindow* window;
+	sf::VideoMode videoMode;
+	sf::Event ev; 
+
 	void initWindow();
 
 public :
