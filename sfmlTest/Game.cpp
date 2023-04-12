@@ -40,7 +40,7 @@ void Game::pollEvents()
 {
 	while (this->window->pollEvent(this->ev))
 	{
-		if (sf::Event::Closed)
+		if (sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
 		{
 			this->window->close();
 			break;
@@ -53,18 +53,25 @@ void Game::Update()
 { 
 	this->pollEvents();
 
-
-	if (this->enemy.getPosition().x > window->getPosition().x && this->enemy.getPosition().y > window->getPosition().y)
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 	{
-		this->enemy.setPosition(sf::Vector2f(this->enemyPosX--, this->enemyPosY--));
+	this->enemy.setPosition(sf::Vector2f(this->enemyPosX--, this->enemyPosY));
+	}if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+	{
+	this->enemy.setPosition(sf::Vector2f(this->enemyPosX++, this->enemyPosY));
+	}if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+	{
+	this->enemy.setPosition(sf::Vector2f(this->enemyPosX, this->enemyPosY--));
+	}if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+	{
+	this->enemy.setPosition(sf::Vector2f(this->enemyPosX, this->enemyPosY++));
 	}
-	else {
-		this->enemy.setPosition(sf::Vector2f(this->enemyPosX++, this->enemyPosY++));
-	}
+
+	
+	
 	// Update Mouse Position 
 	 std::cout << "Mouse position : " << sf::Mouse::getPosition(*this->window).x << " " << sf::Mouse::getPosition(*this->window).y << std::endl;
 	 std::cout << "rectangle position : " << this->enemy.getPosition().x << " " << this->enemy.getPosition().y << std::endl;
-
 }
 
 void Game::render()
