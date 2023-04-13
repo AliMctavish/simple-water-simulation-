@@ -2,9 +2,9 @@
 
 
 
-Enemy::Enemy(sf::Vector2f position , int size)
+
+void Enemy::Render(sf::Vector2f position, float size)
 {
-	
 	this->enemyPosition = position;
 	this->enemyTexture.setFillColor(sf::Color::Green);
 	this->enemyTexture.setPosition(this->enemyPosition.x, this->enemyPosition.y);
@@ -13,13 +13,14 @@ Enemy::Enemy(sf::Vector2f position , int size)
 }
 
 
+//void Enemy::Update()
+//{
+//	this->enemyPosition.x += 0.1f;
+//	this->enemyTexture.setRotation(this->enemyPosition.y);
+//}
 
 
 
-void Enemy::Update()
-{
-
-}
 
 
 

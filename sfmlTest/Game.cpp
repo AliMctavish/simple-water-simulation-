@@ -84,6 +84,14 @@ void Game::render()
 
 	this->window->draw(this->enemy);
 
+	
+		Enemy enemy;
+
+		enemy.Render(sf::Vector2f(3,3) , 20);
+		
+		this->window->draw(enemy.enemyTexture);
+	
+
 	this->window->display();
 }
 

@@ -2,13 +2,13 @@
 #include <vector>
 #include "SFML/Graphics.hpp"
 
-class Enemy {
 
+
+class Enemy {
+public :
 	sf::Vector2f enemyPosition;
 	sf::RectangleShape enemyTexture;
-	Enemy(sf::Vector2f position , int size);
 	
-	~Enemy();
 
 
 	void CreateEnemy()
@@ -18,7 +18,7 @@ class Enemy {
 
 	void Update();
 
-	void Draw();
+	void Render(sf::Vector2f position, float size);
 };
 
 
