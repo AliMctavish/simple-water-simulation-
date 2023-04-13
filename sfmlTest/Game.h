@@ -6,7 +6,6 @@
 class Game
 {
 private:
-
 	void initVariables();
 	sf::RenderWindow* window;
 	sf::VideoMode videoMode;
@@ -40,6 +39,8 @@ public :
 
 	//functions
 	void pollEvents();
+
+	void Controllers();
 
 	void Update();
 
