@@ -1,7 +1,9 @@
 #include "Game.h"
 #include "Enemy.h"
+#include "Object.h"
 
 std::vector<Enemy> enemies;
+std::vector<Object> objects;
 
 void Game::initVariables()
 {
@@ -13,7 +15,6 @@ void Game::initEnemies()
 	this->enemy.setPosition(this->enemyPosX,this->enemyPosY);
 	this->enemy.setSize(sf::Vector2f(150.f,50.f));
 	this->enemy.setFillColor(sf::Color::Red);
-	this->enemy.setRotation(20);
 	this->enemy.setOutlineColor(sf::Color::White);
 	this->enemy.setOutlineThickness(1.f);
 }
@@ -24,6 +25,12 @@ void Game::initWindow()
 	this->videoMode.width = 800;
 	this->window = new sf::RenderWindow(this->videoMode, "doing weird stuff", sf::Style::Titlebar | sf::Style::Close);
 	this->window->setFramerateLimit(144);
+}
+
+
+void Game::initObjects()
+{
+	
 }
 
 Game::Game()
@@ -69,7 +76,6 @@ void Game::Controllers()
 void Game::Update()
 { 
 	this->pollEvents();
-
 	this->Controllers();
 
 	// Update Mouse Position 
@@ -82,7 +88,10 @@ void Game::render()
 	this->window->clear();
 	this->window->draw(this->enemy);
 
-
+	for (auto& b : objects)
+	{
+		b.render();
+	}
 	
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 	{
@@ -92,10 +101,15 @@ void Game::render()
 	}
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Right))
 	{
-		Enemy enemy;
-		enemy.Render(sf::Vector2f(sf::Mouse::getPosition(*this->window).x, sf::Mouse::getPosition(*this->window).y), this->size--);
-		enemies.push_back(enemy);
+		Object platform;
+		platform.inIt(sf::Mouse::getPosition(*this->window).x, sf::Mouse::getPosition(*this->window).y);
+		objects.push_back(platform);
 	}
+
+	/*for (int i = 0; i < objects.size(); i++)
+	{
+		
+	}*/
 
 	for (int i = 0; i < enemies.size(); i++)
 	{
@@ -106,6 +120,20 @@ void Game::render()
 		else {
 			enemies[i].Update();
 		}
+
+		for (int j = 0; j < objects.size(); j++)
+		{
+			if (objects[j].objectTexture.getGlobalBounds().contains(enemies[j].enemyTexture.getPosition()))
+			{
+				enemies[j].ground();
+			}
+			else {
+				enemies[j].Update();
+			}
+			this->window->draw(objects[j].objectTexture);
+
+		}
+	
 		this->window->draw(enemies[i].enemyTexture);
 	}
 

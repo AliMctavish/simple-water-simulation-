@@ -2,11 +2,9 @@
 
 Enemy::Enemy()
 {
-	//std::uniform_int_distribution<int> dist(-5,5);
-
-	this->velocity = 1;
-	std::cout << this->velocity;
-
+	std::random_device rd;
+	std::uniform_int_distribution<int> dist(-5,5);
+	this->velocity = dist(rd);
 }
 
 void Enemy::Render(sf::Vector2f position, float size)
@@ -27,10 +25,10 @@ void Enemy::Update()
 	//this->velocity += 0.1;
 }
 
-
 void Enemy::ground()
 {
-	this->enemyTexture.setPosition(this->enemyPosition.x++, this->enemyPosition.y--);
+	std::cout << this->velocity;
+	this->enemyTexture.setPosition(this->enemyPosition.x = this->enemyPosition.x  + this->velocity, this->enemyPosition.y--);
 }
 
 void Enemy::Collide(sf::Vector2f pos)

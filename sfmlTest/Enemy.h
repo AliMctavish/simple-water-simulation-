@@ -13,11 +13,8 @@ public :
 	float size = 1;
 	int velocity = 1;
 
-	//std::random_device rd;
-
-		
-	
 	Enemy();
+
 
 	void Collide(sf::Vector2f pos);
 
