@@ -7,7 +7,6 @@ void Game::initVariables()
 	this->window = nullptr;
 }
 
-
 void Game::initEnemies()
 {
 	this->enemy.setPosition(this->enemyPosX,this->enemyPosY);
@@ -46,7 +45,6 @@ void Game::pollEvents()
 			this->window->close();
 			break;
 		}
-	
 	}
 }
 
@@ -81,17 +79,19 @@ void Game::Update()
 void Game::render()
 {
 	this->window->clear();
-
 	this->window->draw(this->enemy);
 
-	
-		Enemy enemy;
 
-		enemy.Render(sf::Vector2f(3,3) , 20);
-		
-		this->window->draw(enemy.enemyTexture);
-	
+	for (int i = 0; i < 30; i++)
+	{
+	Enemy enemy;
+	enemy.Render(sf::Vector2f(10 * i, 10 * i), i);
+	this->window->draw(enemy.enemyTexture);
+	}
 
+
+
+	
 	this->window->display();
 }
 

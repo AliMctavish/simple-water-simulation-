@@ -8,8 +8,6 @@ class Enemy {
 public :
 	sf::Vector2f enemyPosition;
 	sf::RectangleShape enemyTexture;
-	
-
 
 	void CreateEnemy()
 	{
@@ -18,7 +16,7 @@ public :
 
 	void Update();
 
-	void Render(sf::Vector2f position, float size);
+	void Render(sf::Vector2f position , float size);
 };
 
 
