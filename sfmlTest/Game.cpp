@@ -1,6 +1,7 @@
 #include "Game.h"
 #include "Enemy.h"
 
+std::vector<Enemy> enemies;
 
 void Game::initVariables()
 {
@@ -81,17 +82,25 @@ void Game::render()
 	this->window->clear();
 	this->window->draw(this->enemy);
 
-
-	for (int i = 0; i < 30; i++)
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 	{
-	Enemy enemy;
-	enemy.Render(sf::Vector2f(10 * i, 10 * i), i);
-	this->window->draw(enemy.enemyTexture);
+		Enemy enemy;
+		enemy.Render(sf::Vector2f(sf::Mouse::getPosition(*this->window).x, sf::Mouse::getPosition(*this->window).y), this->size++);
+		enemies.push_back(enemy);
+	}
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Right))
+	{
+		Enemy enemy;
+		enemy.Render(sf::Vector2f(sf::Mouse::getPosition(*this->window).x, sf::Mouse::getPosition(*this->window).y), this->size--);
+		enemies.push_back(enemy);
 	}
 
+	for (int i = 0; i < enemies.size(); i++)
+	{
+		this->window->draw(enemies[i].enemyTexture);
+		enemies[i].enemyPosition.y--;
+	}
 
-
-	
 	this->window->display();
 }
 

@@ -15,11 +15,12 @@ private:
 
 	void initEnemies();
 
-	//Game Object
+	//Game Objects
 
 	sf::RectangleShape enemy;
 	float enemyPosX = 20;
 	float enemyPosY = 20;
+	float size = 1;
 
 
 
@@ -28,7 +29,7 @@ public :
 	Game();
 	//destruct
 	virtual ~Game();
-	
+
 
 	//Accessors
 
