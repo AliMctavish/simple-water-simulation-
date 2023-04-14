@@ -1,6 +1,8 @@
 #pragma once
 #include <vector>
 #include "SFML/Graphics.hpp"
+#include <iostream>
+#include <random>
 
 
 
@@ -9,16 +11,19 @@ public :
 	sf::Vector2f enemyPosition;
 	sf::RectangleShape enemyTexture;
 	float size = 1;
-	float velocity = 1;
+	int velocity = 1;
 
-	void CreateEnemy()
-	{
+	//std::random_device rd;
 
-	}
+		
+	
+	Enemy();
 
 	void Collide(sf::Vector2f pos);
 
 	void Update();
+
+	void ground();
 
 	void Render(sf::Vector2f position , float size);
 };

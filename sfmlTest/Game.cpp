@@ -13,6 +13,7 @@ void Game::initEnemies()
 	this->enemy.setPosition(this->enemyPosX,this->enemyPosY);
 	this->enemy.setSize(sf::Vector2f(150.f,50.f));
 	this->enemy.setFillColor(sf::Color::Red);
+	this->enemy.setRotation(20);
 	this->enemy.setOutlineColor(sf::Color::White);
 	this->enemy.setOutlineThickness(1.f);
 }
@@ -51,16 +52,16 @@ void Game::pollEvents()
 
 void Game::Controllers()
 {
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 	{
 		this->enemy.setPosition(sf::Vector2f(this->enemyPosX--, this->enemyPosY));
-	}if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+	}if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 	{
 		this->enemy.setPosition(sf::Vector2f(this->enemyPosX++, this->enemyPosY));
-	}if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+	}if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
 	{
 		this->enemy.setPosition(sf::Vector2f(this->enemyPosX, this->enemyPosY--));
-	}if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+	}if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 	{
 		this->enemy.setPosition(sf::Vector2f(this->enemyPosX, this->enemyPosY++));
 	}
@@ -72,8 +73,8 @@ void Game::Update()
 	this->Controllers();
 
 	// Update Mouse Position 
-	 std::cout << "Mouse position : " << sf::Mouse::getPosition(*this->window).x << " " << sf::Mouse::getPosition(*this->window).y << std::endl;
-	 std::cout << "rectangle position : " << this->enemy.getPosition().x << " " << this->enemy.getPosition().y << std::endl;
+	 //std::cout << "Mouse position : " << sf::Mouse::getPosition(*this->window).x << " " << sf::Mouse::getPosition(*this->window).y << std::endl;
+	// std::cout << "rectangle position : " << this->enemy.getPosition().x << " " << this->enemy.getPosition().y << std::endl;
 }
 
 void Game::render()
@@ -100,7 +101,7 @@ void Game::render()
 	{
 		if (this->enemy.getGlobalBounds().contains(enemies[i].enemyTexture.getPosition()))
 		{
-			enemies[i].Collide(this->enemy.getPosition());
+			enemies[i].ground();
 		}
 		else {
 			enemies[i].Update();

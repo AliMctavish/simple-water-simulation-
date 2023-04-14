@@ -1,13 +1,21 @@
 #include "Enemy.h"
 
+Enemy::Enemy()
+{
+	//std::uniform_int_distribution<int> dist(-5,5);
+
+	this->velocity = 1;
+	std::cout << this->velocity;
+
+}
 
 void Enemy::Render(sf::Vector2f position, float size)
 {
 	this->enemyTexture.setPosition(position.x, position.y);
 	this->enemyTexture.setSize(sf::Vector2f(size,size));
-	this->enemyTexture.setFillColor(sf::Color::Red);
+	this->enemyTexture.setFillColor(sf::Color::Blue);
 	this->enemyTexture.setOutlineColor(sf::Color::White);
-	this->enemyTexture.setOutlineThickness(1.f);
+	this->enemyTexture.setOutlineThickness(.5f);
 	this->size = size;
 	this->enemyPosition.x = position.x;
 	this->enemyPosition.y = position.y;
@@ -15,10 +23,15 @@ void Enemy::Render(sf::Vector2f position, float size)
 
 void Enemy::Update()
 {
-	this->enemyTexture.setPosition(this->enemyPosition.x, this->enemyPosition.y * velocity);
-	this->velocity += 0.1;
+	this->enemyTexture.setPosition(this->enemyPosition.x, this->enemyPosition.y++);
+	//this->velocity += 0.1;
 }
 
+
+void Enemy::ground()
+{
+	this->enemyTexture.setPosition(this->enemyPosition.x++, this->enemyPosition.y--);
+}
 
 void Enemy::Collide(sf::Vector2f pos)
 {
