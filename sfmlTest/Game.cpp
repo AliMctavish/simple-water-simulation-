@@ -11,7 +11,7 @@ void Game::initVariables()
 void Game::initEnemies()
 {
 	this->enemy.setPosition(this->enemyPosX,this->enemyPosY);
-	this->enemy.setSize(sf::Vector2f(100.f,100.f));
+	this->enemy.setSize(sf::Vector2f(150.f,50.f));
 	this->enemy.setFillColor(sf::Color::Red);
 	this->enemy.setOutlineColor(sf::Color::White);
 	this->enemy.setOutlineThickness(1.f);
@@ -21,7 +21,7 @@ void Game::initWindow()
 {
 	this->videoMode.height = 600;
 	this->videoMode.width = 800;
-	this->window = new sf::RenderWindow(this->videoMode, "first sfml :D", sf::Style::Titlebar | sf::Style::Close);
+	this->window = new sf::RenderWindow(this->videoMode, "doing weird stuff", sf::Style::Titlebar | sf::Style::Close);
 	this->window->setFramerateLimit(144);
 }
 
@@ -65,7 +65,6 @@ void Game::Controllers()
 		this->enemy.setPosition(sf::Vector2f(this->enemyPosX, this->enemyPosY++));
 	}
 }
-
 void Game::Update()
 { 
 	this->pollEvents();
@@ -82,11 +81,13 @@ void Game::render()
 	this->window->clear();
 	this->window->draw(this->enemy);
 
+
+	
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 	{
 		Enemy enemy;
-		enemy.Render(sf::Vector2f(sf::Mouse::getPosition(*this->window).x, sf::Mouse::getPosition(*this->window).y), this->size++);
-		enemies.push_back(enemy);
+		enemy.Render(sf::Vector2f(sf::Mouse::getPosition(*this->window).x, sf::Mouse::getPosition(*this->window).y), 2);
+		enemies.push_back(enemy);	
 	}
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Right))
 	{
@@ -97,8 +98,20 @@ void Game::render()
 
 	for (int i = 0; i < enemies.size(); i++)
 	{
+		if (this->enemy.getGlobalBounds().contains(enemies[i].enemyTexture.getPosition()))
+		{
+			enemies[i].Collide(this->enemy.getPosition());
+		}
+		else {
+			enemies[i].Update();
+		}
 		this->window->draw(enemies[i].enemyTexture);
-		enemies[i].enemyPosition.y--;
+	}
+
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+	{
+		enemies.clear();
 	}
 
 	this->window->display();
