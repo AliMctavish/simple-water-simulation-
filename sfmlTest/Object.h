@@ -1,9 +1,6 @@
 #pragma once
 #include "SFML/Graphics.hpp"
 
-
-
-
 class Object
 {
 public:
@@ -11,9 +8,6 @@ public:
 	sf::RectangleShape objectTexture;
 
 	void inIt(float posX, float posY);
-
-	void render();
-
 };
 
 

@@ -27,7 +27,6 @@ void Enemy::Update()
 
 void Enemy::ground()
 {
-	std::cout << this->velocity;
 	this->enemyTexture.setPosition(this->enemyPosition.x = this->enemyPosition.x  + this->velocity, this->enemyPosition.y--);
 }
 

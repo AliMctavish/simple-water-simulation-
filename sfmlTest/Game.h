@@ -15,8 +15,6 @@ private:
 
 	void initEnemies();
 
-	void initObjects();
-
 	//Game Objects
 
 	sf::RectangleShape enemy;

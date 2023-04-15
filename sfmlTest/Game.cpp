@@ -27,12 +27,6 @@ void Game::initWindow()
 	this->window->setFramerateLimit(144);
 }
 
-
-void Game::initObjects()
-{
-	
-}
-
 Game::Game()
 {
 	this->initVariables();
@@ -72,32 +66,11 @@ void Game::Controllers()
 	{
 		this->enemy.setPosition(sf::Vector2f(this->enemyPosX, this->enemyPosY++));
 	}
-}
-void Game::Update()
-{ 
-	this->pollEvents();
-	this->Controllers();
-
-	// Update Mouse Position 
-	 //std::cout << "Mouse position : " << sf::Mouse::getPosition(*this->window).x << " " << sf::Mouse::getPosition(*this->window).y << std::endl;
-	// std::cout << "rectangle position : " << this->enemy.getPosition().x << " " << this->enemy.getPosition().y << std::endl;
-}
-
-void Game::render()
-{
-	this->window->clear();
-	this->window->draw(this->enemy);
-
-	for (auto& b : objects)
-	{
-		b.render();
-	}
-	
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 	{
 		Enemy enemy;
-		enemy.Render(sf::Vector2f(sf::Mouse::getPosition(*this->window).x, sf::Mouse::getPosition(*this->window).y), 2);
-		enemies.push_back(enemy);	
+		enemy.Render(sf::Vector2f(sf::Mouse::getPosition(*this->window).x, sf::Mouse::getPosition(*this->window).y), 5);
+		enemies.push_back(enemy);
 	}
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Right))
 	{
@@ -105,11 +78,21 @@ void Game::render()
 		platform.inIt(sf::Mouse::getPosition(*this->window).x, sf::Mouse::getPosition(*this->window).y);
 		objects.push_back(platform);
 	}
+}
+void Game::Update()
+{ 
+	this->pollEvents();
+	this->Controllers();
 
-	/*for (int i = 0; i < objects.size(); i++)
-	{
-		
-	}*/
+	//Update Mouse Position 
+	std::cout << "Mouse position : " << sf::Mouse::getPosition(*this->window).x << " " << sf::Mouse::getPosition(*this->window).y << std::endl;
+	std::cout << "rectangle position : " << this->enemy.getPosition().x << " " << this->enemy.getPosition().y << std::endl;
+}
+
+void Game::render()
+{
+	this->window->clear();
+	this->window->draw(this->enemy);
 
 	for (int i = 0; i < enemies.size(); i++)
 	{
@@ -120,27 +103,28 @@ void Game::render()
 		else {
 			enemies[i].Update();
 		}
-
-		for (int j = 0; j < objects.size(); j++)
-		{
-			if (objects[j].objectTexture.getGlobalBounds().contains(enemies[j].enemyTexture.getPosition()))
-			{
-				enemies[j].ground();
-			}
-			else {
-				enemies[j].Update();
-			}
-			this->window->draw(objects[j].objectTexture);
-
-		}
-	
 		this->window->draw(enemies[i].enemyTexture);
 	}
 
+	for (int i = 0; i < objects.size(); i++)
+	{
+		for (int j = 0; j < enemies.size(); j++)
+		{
+			if (objects[i].objectTexture.getGlobalBounds().contains(enemies[j].enemyTexture.getPosition()))
+			{
+				enemies[j].ground();
+			}
+		}
+			this->window->draw(objects[i].objectTexture);
+	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 	{
 		enemies.clear();
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::G))
+	{
+		objects.clear();
 	}
 
 	this->window->display();
