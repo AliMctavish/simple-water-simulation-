@@ -69,7 +69,10 @@ void Game::Controllers()
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 	{
 		Enemy enemy;
-		enemy.Render(sf::Vector2f(sf::Mouse::getPosition(*this->window).x, sf::Mouse::getPosition(*this->window).y), 5);
+		enemy.Render(sf::Vector2f(
+			sf::Mouse::getPosition(*this->window).x,
+			sf::Mouse::getPosition(*this->window).y),
+			5);
 		enemies.push_back(enemy);
 	}
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Right))
@@ -78,12 +81,21 @@ void Game::Controllers()
 		platform.inIt(sf::Mouse::getPosition(*this->window).x, sf::Mouse::getPosition(*this->window).y);
 		objects.push_back(platform);
 	}
+	for (int i = 0; i < objects.size(); i++)
+	{
+		for (int j = 0; j < enemies.size(); j++)
+		{
+			if (objects[i].objectTexture.getGlobalBounds().contains(enemies[j].enemyTexture.getPosition()))
+			{
+				enemies[j].ground();
+			}
+		}
+	}
 }
 void Game::Update()
 { 
 	this->pollEvents();
 	this->Controllers();
-
 	//Update Mouse Position 
 	std::cout << "Mouse position : " << sf::Mouse::getPosition(*this->window).x << " " << sf::Mouse::getPosition(*this->window).y << std::endl;
 	std::cout << "rectangle position : " << this->enemy.getPosition().x << " " << this->enemy.getPosition().y << std::endl;
@@ -94,28 +106,16 @@ void Game::render()
 	this->window->clear();
 	this->window->draw(this->enemy);
 
-	for (int i = 0; i < enemies.size(); i++)
-	{
-		if (this->enemy.getGlobalBounds().contains(enemies[i].enemyTexture.getPosition()))
-		{
-			enemies[i].ground();
-		}
-		else {
-			enemies[i].Update();
-		}
-		this->window->draw(enemies[i].enemyTexture);
-	}
 
 	for (int i = 0; i < objects.size(); i++)
 	{
-		for (int j = 0; j < enemies.size(); j++)
-		{
-			if (objects[i].objectTexture.getGlobalBounds().contains(enemies[j].enemyTexture.getPosition()))
-			{
-				enemies[j].ground();
-			}
-		}
-			this->window->draw(objects[i].objectTexture);
+	 this->window->draw(objects[i].objectTexture);
+	}
+
+	for (int i = 0; i < enemies.size(); i++)
+	{
+	  enemies[i].Update();
+	  this->window->draw(enemies[i].enemyTexture);
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
