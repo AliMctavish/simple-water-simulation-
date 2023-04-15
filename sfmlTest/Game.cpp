@@ -1,9 +1,11 @@
 #include "Game.h"
 #include "Enemy.h"
 #include "Object.h"
+#include "Sand.h"
 
 std::vector<Enemy> enemies;
 std::vector<Object> objects;
+std::vector<Sand> sands;
 
 void Game::initVariables()
 {
@@ -53,19 +55,6 @@ void Game::pollEvents()
 
 void Game::Controllers()
 {
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-	{
-		this->enemy.setPosition(sf::Vector2f(this->enemyPosX--, this->enemyPosY));
-	}if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-	{
-		this->enemy.setPosition(sf::Vector2f(this->enemyPosX++, this->enemyPosY));
-	}if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-	{
-		this->enemy.setPosition(sf::Vector2f(this->enemyPosX, this->enemyPosY--));
-	}if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-	{
-		this->enemy.setPosition(sf::Vector2f(this->enemyPosX, this->enemyPosY++));
-	}
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 	{
 		Enemy enemy;
@@ -89,6 +78,11 @@ void Game::Controllers()
 	{
 		objects.clear();
 	}
+	if(sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+	{
+		Sand sand(sf::Mouse::getPosition(*this->window).x, sf::Mouse::getPosition(*this->window).y);
+		sands.push_back(sand);
+	}
 
 }
 void Game::Update()
@@ -103,6 +97,14 @@ void Game::Update()
 			enemies.erase(enemies.begin() + i);
 		}
 	}
+	for (int i = 0; i < sands.size(); i++)
+	{
+		sands[i].update();
+		if (sands[i].sandTexutre.getPosition().y > this->window->getSize().y)
+		{
+			sands.erase(sands.begin() + i);
+		}
+	}
 	for (int i = 0; i < objects.size(); i++)
 	{
 		for (int j = 0; j < enemies.size(); j++)
@@ -110,6 +112,13 @@ void Game::Update()
 			if (objects[i].objectTexture.getGlobalBounds().contains(enemies[j].enemyTexture.getPosition()))
 			{
 				enemies[j].ground();
+			}
+		}
+		for (int j = 0; j < sands.size(); j++)
+		{
+			if (objects[i].objectTexture.getGlobalBounds().contains(sands[j].sandTexutre.getPosition()))
+			{
+				sands[j].ground();
 			}
 		}
 	}
@@ -121,9 +130,6 @@ void Game::Update()
 void Game::render()
 {
 	this->window->clear();
-	this->window->draw(this->enemy);
-
-
 	for (int i = 0; i < objects.size(); i++)
 	{
 	 this->window->draw(objects[i].objectTexture);
@@ -133,9 +139,10 @@ void Game::render()
 	{
 	  this->window->draw(enemies[i].enemyTexture);
 	}
-
-
-
+	for (int i = 0; i < sands.size(); i++)
+	{
+		this->window->draw(sands[i].sandTexutre);
+	}
 	this->window->display();
 }
 
