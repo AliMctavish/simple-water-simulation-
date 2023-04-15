@@ -118,7 +118,7 @@ void Game::Update()
 		{
 			if (objects[i].objectTexture.getGlobalBounds().contains(sands[j].sandTexutre.getPosition()))
 			{
-				sands[j].ground();
+				sands[j].ground(sands);
 			}
 		}
 	}
