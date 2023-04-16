@@ -3,7 +3,7 @@
 void Sand::init()
 {
 	std::random_device rd;
-	std::uniform_int_distribution<int> dist(-5, 5);
+	std::uniform_int_distribution<int> dist(-1.f,1.f);
 	this->velocity = dist(rd);
 }
 
@@ -21,16 +21,16 @@ Sand::Sand(float posX, float posY)
 
 void Sand::update()
 {
-	this->sandTexutre.setPosition(this->sandPos.x, this->sandPos.y++);
+	this->sandTexutre.move(0.f, 3.f);
 }
 
 void Sand::ground(std::vector<Sand> sands)
 {
 	for (int i = 0; i < sands.size(); i++)
 	{
-		if (this->sandTexutre.getGlobalBounds().contains(sands[i].sandTexutre.getPosition()))
+		if (this->sandTexutre.getPosition().y > sands[i].sandTexutre.getPosition().y)
 		{
-			this->sandTexutre.setPosition(this->sandPos.x, this->sandPos.y--);
+			this->sandTexutre.move(0,this->velocity);
 		}
 	}
 	//this->sandTexutre.setPosition(this->sandPos.x, this->sandPos.y--);

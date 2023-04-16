@@ -22,7 +22,7 @@ public :
 
 	void ground();
 
-	void Render(sf::Vector2f position , float size);
+	void Render(float posX , float posY , float size);
 };
 
 

@@ -10,6 +10,9 @@ std::vector<Sand> sands;
 void Game::initVariables()
 {
 	this->window = nullptr;
+	this->enemyPosX = 20;
+	this->enemyPosY = 20;
+	this->size = 1;
 }
 
 void Game::initEnemies()
@@ -58,16 +61,13 @@ void Game::Controllers()
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 	{
 		Enemy enemy;
-		enemy.Render(sf::Vector2f(
-			sf::Mouse::getPosition(*this->window).x,
-			sf::Mouse::getPosition(*this->window).y),
-			5);
+		enemy.Render(this->mousePosView.x,this->mousePosView.y,5);
 		enemies.push_back(enemy);
 	}
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Right))
 	{
 		Object platform;
-		platform.inIt(sf::Mouse::getPosition(*this->window).x, sf::Mouse::getPosition(*this->window).y);
+		platform.inIt(this->mousePosView.x,this->mousePosView.y);
 		objects.push_back(platform);
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
@@ -80,15 +80,14 @@ void Game::Controllers()
 	}
 	if(sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 	{
-		Sand sand(sf::Mouse::getPosition(*this->window).x, sf::Mouse::getPosition(*this->window).y);
+		Sand sand(this->mousePosView.x,this->mousePosView.y);
 		sands.push_back(sand);
 	}
 
 }
-void Game::Update()
+
+void Game::EnemyUpdate()
 {
-	this->pollEvents();
-	this->Controllers();
 	for (int i = 0; i < enemies.size(); i++)
 	{
 		enemies[i].Update();
@@ -122,9 +121,20 @@ void Game::Update()
 			}
 		}
 	}
-	//Update Mouse Position 
-	//std::cout << "Mouse position : " << sf::Mouse::getPosition(*this->window).x << " " << sf::Mouse::getPosition(*this->window).y << std::endl;
-	//std::cout << "rectangle position : " << this->enemy.getPosition().x << " " << this->enemy.getPosition().y << std::endl;
+}
+
+void Game::UpdateMousePosition()
+{
+	this->mousePos = sf::Mouse::getPosition(*this->window);
+	this->mousePosView = this->window->mapPixelToCoords(this->mousePos);
+}
+
+void Game::Update()
+{
+	this->pollEvents();
+	this->Controllers();
+	this->UpdateMousePosition();
+	this->EnemyUpdate();
 }
 
 void Game::render()

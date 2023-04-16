@@ -18,9 +18,11 @@ private:
 	//Game Objects
 
 	sf::RectangleShape enemy;
-	float enemyPosX = 20;
-	float enemyPosY = 20;
-	float size = 1;
+	sf::Vector2i mousePos;
+	sf::Vector2f mousePosView;
+	float enemyPosX;
+	float enemyPosY;
+	float size;
 
 
 
@@ -42,6 +44,10 @@ public :
 	void pollEvents();
 
 	void Controllers();
+
+	void EnemyUpdate();
+
+	void UpdateMousePosition();
 
 	void Update();
 
