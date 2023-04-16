@@ -61,7 +61,7 @@ void Game::Controllers()
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 	{
 		Enemy enemy;
-		enemy.Render(this->mousePosView.x,this->mousePosView.y,5);
+		enemy.Render(this->mousePosView.x,this->mousePosView.y);
 		enemies.push_back(enemy);
 	}
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Right))
@@ -88,36 +88,32 @@ void Game::Controllers()
 
 void Game::EnemyUpdate()
 {
-	for (int i = 0; i < enemies.size(); i++)
+	for (auto& enemy : enemies)
 	{
-		enemies[i].Update();
-		if (enemies[i].enemyTexture.getPosition().y > this->window->getSize().y)
+		enemy.Update();
+		if (enemy.enemyTexture.getPosition().y > this->window->getSize().y)
 		{
-			enemies.erase(enemies.begin() + i);
+			enemies.erase(enemies.begin());
 		}
 	}
-	for (int i = 0; i < sands.size(); i++)
+	for (auto& sand : sands)
 	{
-		sands[i].update();
-		if (sands[i].sandTexutre.getPosition().y > this->window->getSize().y)
+		if (sand.isGrounded == false)
 		{
-			sands.erase(sands.begin() + i);
+		sand.update();
+		}
+		if (sand.sandTexutre.getPosition().y > this->window->getSize().y)
+		{
+			sands.erase(sands.begin());
 		}
 	}
-	for (int i = 0; i < objects.size(); i++)
+	for (auto& object : objects)
 	{
-		for (int j = 0; j < enemies.size(); j++)
+		for (auto& enemy : enemies)
 		{
-			if (objects[i].objectTexture.getGlobalBounds().contains(enemies[j].enemyTexture.getPosition()))
+			if (object.objectTexture.getGlobalBounds().contains(enemy.enemyTexture.getPosition()))
 			{
-				enemies[j].ground();
-			}
-		}
-		for (int j = 0; j < sands.size(); j++)
-		{
-			if (objects[i].objectTexture.getGlobalBounds().contains(sands[j].sandTexutre.getPosition()))
-			{
-				sands[j].ground(sands);
+				enemy.ground();
 			}
 		}
 	}

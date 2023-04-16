@@ -7,16 +7,15 @@ void Sand::init()
 	this->velocity = dist(rd);
 }
 
-
-Sand::Sand(float posX, float posY)
+Sand::Sand(float& posX, float& posY)
 {
+	this->isGrounded = false;
 	this->sandTexutre.setPosition(posX, posY);
 	this->sandTexutre.setFillColor(sf::Color::Green);
-	this->sandTexutre.setSize(sf::Vector2f(4,4));
+	this->sandTexutre.setSize(sf::Vector2f(6,6));
 	this->sandTexutre.setOutlineColor(sf::Color::White);
 	this->sandTexutre.setOutlineThickness(0.f);
 	this->sandPos = sf::Vector2f(posX, posY);
-
 }
 
 void Sand::update()
@@ -24,14 +23,7 @@ void Sand::update()
 	this->sandTexutre.move(0.f, 3.f);
 }
 
-void Sand::ground(std::vector<Sand> sands)
+void Sand::ground()
 {
-	for (int i = 0; i < sands.size(); i++)
-	{
-		if (this->sandTexutre.getPosition().y > sands[i].sandTexutre.getPosition().y)
-		{
-			this->sandTexutre.move(0,this->velocity);
-		}
-	}
-	//this->sandTexutre.setPosition(this->sandPos.x, this->sandPos.y--);
+	this->sandTexutre.move(0, -1.f);
 }

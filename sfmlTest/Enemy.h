@@ -16,13 +16,11 @@ public :
 	Enemy();
 
 
-	void Collide(sf::Vector2f pos);
-
 	void Update();
 
 	void ground();
 
-	void Render(float posX , float posY , float size);
+	void Render(float& posX , float& posY);
 };
 
 

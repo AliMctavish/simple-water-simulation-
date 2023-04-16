@@ -7,14 +7,13 @@ Enemy::Enemy()
 	this->velocity = dist(rd);
 }
 
-void Enemy::Render(float posX , float posY, float size)
+void Enemy::Render(float& posX , float& posY)
 {
 	this->enemyTexture.setPosition(posX,posY);
-	this->enemyTexture.setSize(sf::Vector2f(size,size));
+	this->enemyTexture.setSize(sf::Vector2f(5,5));
 	this->enemyTexture.setFillColor(sf::Color::Blue);
 	this->enemyTexture.setOutlineColor(sf::Color::White);
 	this->enemyTexture.setOutlineThickness(.5f);
-	this->size = size;
 	this->enemyPosition.x = posX;
 	this->enemyPosition.y = posY;
 }
@@ -27,15 +26,9 @@ void Enemy::Update()
 
 void Enemy::ground()
 {
-	this->enemyTexture.move(this->velocity, -1.f);
+	this->enemyTexture.move(this->velocity, - 1.f);
 }
 
-void Enemy::Collide(sf::Vector2f pos)
-{
-	pos.x = this->enemyTexture.getPosition().x;
-	pos.y = this->enemyTexture.getPosition().y;
-	this->enemyTexture.setPosition(pos.x,pos.y);
-}
 
 
 
