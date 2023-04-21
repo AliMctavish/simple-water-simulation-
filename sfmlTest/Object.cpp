@@ -1,7 +1,7 @@
 #include "Object.h"
 
 
-void Object::inIt(float posX, float posY)
+void Object::inIt(float& posX, float& posY)
 {
 	this->objectTexture.setPosition(posX,posY);
 	this->objectTexture.setSize(sf::Vector2f(80, 30));

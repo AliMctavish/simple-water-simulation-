@@ -12,7 +12,7 @@ Sand::Sand(float& posX, float& posY)
 	this->isGrounded = false;
 	this->sandTexutre.setPosition(posX, posY);
 	this->sandTexutre.setFillColor(sf::Color::Green);
-	this->sandTexutre.setSize(sf::Vector2f(6,6));
+	this->sandTexutre.setSize(sf::Vector2f(10,10));
 	this->sandTexutre.setOutlineColor(sf::Color::White);
 	this->sandTexutre.setOutlineThickness(0.f);
 	this->sandPos = sf::Vector2f(posX, posY);

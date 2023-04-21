@@ -20,6 +20,8 @@ private:
 	sf::RectangleShape enemy;
 	sf::Vector2i mousePos;
 	sf::Vector2f mousePosView;
+	sf::Font font; 
+	sf::Text myText;
 	float enemyPosX;
 	float enemyPosY;
 	float size;
@@ -42,6 +44,8 @@ public :
 
 	//functions
 	void pollEvents();
+
+	void initGrid();
 
 	void Controllers();
 

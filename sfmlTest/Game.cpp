@@ -7,8 +7,14 @@ std::vector<Enemy> enemies;
 std::vector<Object> objects;
 std::vector<Sand> sands;
 
+
+
+
 void Game::initVariables()
 {
+	this->font.loadFromFile("Richard Samuels.otf");
+	this->myText.setFont(this->font);
+	this->myText.setCharacterSize(12);
 	this->window = nullptr;
 	this->enemyPosX = 20;
 	this->enemyPosY = 20;
@@ -26,11 +32,15 @@ void Game::initEnemies()
 
 void Game::initWindow()
 {
-	this->videoMode.height = 600;
-	this->videoMode.width = 800;
+	this->videoMode.height =600;
+	this->videoMode.width  = 800;
 	this->window = new sf::RenderWindow(this->videoMode, "doing weird stuff", sf::Style::Titlebar | sf::Style::Close);
 	this->window->setFramerateLimit(144);
 }
+
+
+
+
 
 Game::Game()
 {
@@ -88,12 +98,12 @@ void Game::Controllers()
 
 void Game::EnemyUpdate()
 {
-	for (auto& enemy : enemies)
+	for (int i = 0  ; i < enemies.size(); i++)
 	{
-		enemy.Update();
-		if (enemy.enemyTexture.getPosition().y > this->window->getSize().y)
+		enemies[i].Update();
+		if (enemies[i].enemyTexture.getPosition().y > this->window->getSize().y)
 		{
-			enemies.erase(enemies.begin());
+			enemies.erase(enemies.begin() + i);
 		}
 	}
 	for (auto& sand : sands)
@@ -136,18 +146,23 @@ void Game::Update()
 void Game::render()
 {
 	this->window->clear();
-	for (int i = 0; i < objects.size(); i++)
+	for (auto& object : objects)
 	{
-	 this->window->draw(objects[i].objectTexture);
+	 this->window->draw(object.objectTexture);
 	}
 
-	for (int i = 0; i < enemies.size(); i++)
+	this->myText.setPosition(200, 200);
+	this->myText.setFillColor(sf::Color::White);
+	this->myText.setString("hello");
+	this->window->draw(this->myText);
+
+	for (auto& enemy : enemies)
 	{
-	  this->window->draw(enemies[i].enemyTexture);
+	  this->window->draw(enemy.enemyTexture);
 	}
-	for (int i = 0; i < sands.size(); i++)
+	for (auto& sand : sands)
 	{
-		this->window->draw(sands[i].sandTexutre);
+		this->window->draw(sand.sandTexutre);
 	}
 	this->window->display();
 }
