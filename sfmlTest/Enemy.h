@@ -20,7 +20,7 @@ public :
 
 	void ground();
 
-	void Render(float& posX , float& posY);
+	void Render(float* posX , float* posY);
 };
 
 

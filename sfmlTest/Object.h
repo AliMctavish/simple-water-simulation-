@@ -7,7 +7,7 @@ public:
 	sf::Vector2f position;
 	sf::RectangleShape objectTexture;
 
-	void inIt(float& posX, float& posY);
+	void inIt(float* posX, float* posY);
 };
 
 

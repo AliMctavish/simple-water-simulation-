@@ -7,15 +7,15 @@ Enemy::Enemy()
 	this->velocity = dist(rd);
 }
 
-void Enemy::Render(float& posX , float& posY)
+void Enemy::Render(float* posX , float* posY)
 {
-	this->enemyTexture.setPosition(posX,posY);
+	this->enemyTexture.setPosition(*posX,*posY);
 	this->enemyTexture.setSize(sf::Vector2f(5,5));
 	this->enemyTexture.setFillColor(sf::Color::Blue);
 	this->enemyTexture.setOutlineColor(sf::Color::White);
 	this->enemyTexture.setOutlineThickness(.5f);
-	this->enemyPosition.x = posX;
-	this->enemyPosition.y = posY;
+	this->enemyPosition.x = *posX;
+	this->enemyPosition.y = *posY;
 }
 
 void Enemy::Update()

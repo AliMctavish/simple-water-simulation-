@@ -2,6 +2,8 @@
 #include "Enemy.h"
 #include "Object.h"
 #include "Sand.h"
+#include <sstream>
+
 
 std::vector<Enemy> enemies;
 std::vector<Object> objects;
@@ -14,7 +16,7 @@ void Game::initVariables()
 {
 	this->font.loadFromFile("Richard Samuels.otf");
 	this->myText.setFont(this->font);
-	this->myText.setCharacterSize(12);
+	this->myText.setCharacterSize(20);
 	this->window = nullptr;
 	this->enemyPosX = 20;
 	this->enemyPosY = 20;
@@ -47,6 +49,7 @@ Game::Game()
 	this->initVariables();
 	this->initWindow();
 	this->initEnemies();
+	this->initText();
 }
 
 Game::~Game()
@@ -66,18 +69,38 @@ void Game::pollEvents()
 	}
 }
 
+
+void Game::initText()
+{
+	this->myText.setPosition(10,10);
+	this->myText.setFillColor(sf::Color::White);
+
+}
+
+
+
+void Game::updateText()
+{
+	std::stringstream ss;
+	ss << "number of particles : " << enemies.size();
+	this->myText.setString(ss.str());
+}
+
+
+
+
 void Game::Controllers()
 {
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 	{
 		Enemy enemy;
-		enemy.Render(this->mousePosView.x,this->mousePosView.y);
+		enemy.Render(&this->mousePosView.x,&this->mousePosView.y);
 		enemies.push_back(enemy);
 	}
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Right))
 	{
 		Object platform;
-		platform.inIt(this->mousePosView.x,this->mousePosView.y);
+		platform.inIt(&this->mousePosView.x,&this->mousePosView.y);
 		objects.push_back(platform);
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
@@ -141,6 +164,7 @@ void Game::Update()
 	this->Controllers();
 	this->UpdateMousePosition();
 	this->EnemyUpdate();
+	this->updateText();
 }
 
 void Game::render()
@@ -151,9 +175,7 @@ void Game::render()
 	 this->window->draw(object.objectTexture);
 	}
 
-	this->myText.setPosition(200, 200);
-	this->myText.setFillColor(sf::Color::White);
-	this->myText.setString("hello");
+	
 	this->window->draw(this->myText);
 
 	for (auto& enemy : enemies)

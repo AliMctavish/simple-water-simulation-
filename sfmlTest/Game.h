@@ -47,6 +47,10 @@ public :
 
 	void initGrid();
 
+	void initText();
+
+	void updateText();
+
 	void Controllers();
 
 	void EnemyUpdate();
